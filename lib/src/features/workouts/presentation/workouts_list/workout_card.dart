@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lifted/src/common_widgets/custom_image.dart';
 import 'package:lifted/src/constants/app_sizes.dart';
 import 'package:lifted/src/features/workouts/domain/workout.dart';
-import 'package:lifted/src/localization/string_hardcoded.dart';
-
-import 'package:lifted/src/utils/currency_formatter.dart';
 
 /// Used to show a single workout inside a card.
 class WorkoutCard extends StatelessWidget {
