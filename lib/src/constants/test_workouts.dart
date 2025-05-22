@@ -4,7 +4,7 @@ const kTestWorkouts = [
   Workout(
     id: '1',
     imageUrl: 'assets/workouts/bruschetta-plate.jpg',
-    title: 'Full Body Wrokout',
+    title: 'Full Body Workout',
     description: 'Lorem ipsum',
   ),
   Workout(
