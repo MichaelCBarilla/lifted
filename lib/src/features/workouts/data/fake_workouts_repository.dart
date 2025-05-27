@@ -10,7 +10,7 @@ class FakeWorkoutsRepository {
   }
 
   Workout? getWorkout(String id) {
-    return _workouts.firstWhere((workout) => workout.id == id);
+    return _getWorkout(_workouts, id);
   }
 
   Future<List<Workout>> fetchWorkoutsList() async {
@@ -24,8 +24,15 @@ class FakeWorkoutsRepository {
   }
 
   Stream<Workout?> watchWorkout(String id) {
-    return watchWorkoutsList()
-        .map((workouts) => workouts.firstWhere((workout) => workout.id == id));
+    return watchWorkoutsList().map((workouts) => _getWorkout(workouts, id));
+  }
+
+  static Workout? _getWorkout(List<Workout> workouts, String id) {
+    try {
+      return workouts.firstWhere((workout) => workout.id == id);
+    } catch (e) {
+      return null;
+    }
   }
 }
 
