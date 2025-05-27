@@ -8,19 +8,19 @@ class MockAuthRepository extends Mock implements FakeAuthRepository {}
 
 void main() {
   group('AccountScreenController', () {
+    late MockAuthRepository authRepository;
+    late AccountScreenController controller;
+    setUp(() {
+      authRepository = MockAuthRepository();
+      controller = AccountScreenController(authRepository: authRepository);
+    });
     test('initital state is AsyncData', () {
-      final authRepository = MockAuthRepository();
-      final controller =
-          AccountScreenController(authRepository: authRepository);
       verifyNever(authRepository.signOut);
       expect(controller.state, AsyncData<void>(null));
     });
 
     test('signOut success', () async {
       // setup
-      final authRepository = MockAuthRepository();
-      final controller =
-          AccountScreenController(authRepository: authRepository);
       when(authRepository.signOut).thenAnswer(
         (_) => Future.value(),
       );
@@ -41,9 +41,6 @@ void main() {
 
     test('signOut failure', () async {
       // setup
-      final authRepository = MockAuthRepository();
-      final controller =
-          AccountScreenController(authRepository: authRepository);
       final exception = Exception('Connection Failed');
       when(authRepository.signOut).thenThrow(exception);
       expectLater(
