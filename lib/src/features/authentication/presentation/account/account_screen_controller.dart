@@ -3,7 +3,7 @@ import 'package:lifted/src/features/authentication/data/fake_auth_repository.dar
 
 class AccountScreenController extends StateNotifier<AsyncValue<void>> {
   AccountScreenController({required this.authRepository})
-      : super(const AsyncValue<void>.data(null));
+      : super(const AsyncData<void>(null));
 
   final FakeAuthRepository authRepository;
 
@@ -17,7 +17,7 @@ class AccountScreenController extends StateNotifier<AsyncValue<void>> {
     //   state = AsyncValue<void>.error(e, st);
     //   return false;
     // }
-    state = const AsyncValue<void>.loading();
+    state = const AsyncLoading<void>();
     state = await AsyncValue.guard(() => authRepository.signOut());
   }
 }
