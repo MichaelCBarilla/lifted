@@ -1,10 +1,12 @@
+@Timeout(Duration(milliseconds: 500))
+library;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lifted/src/features/authentication/data/fake_auth_repository.dart';
 import 'package:lifted/src/features/authentication/presentation/account/account_screen_controller.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockAuthRepository extends Mock implements FakeAuthRepository {}
+import '../../../../mocks.dart';
 
 void main() {
   group('AccountScreenController', () {
