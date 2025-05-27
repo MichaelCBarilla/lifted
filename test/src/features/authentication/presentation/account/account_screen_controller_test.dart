@@ -24,11 +24,19 @@ void main() {
       when(authRepository.signOut).thenAnswer(
         (_) => Future.value(),
       );
+      expectLater(
+        controller.stream,
+        emitsInOrder(
+          const [
+            AsyncLoading<void>(),
+            AsyncData<void>(null),
+          ],
+        ),
+      );
       // run
       await controller.signOut();
       // verify
       verify(authRepository.signOut).called(1);
-      expect(controller.state, AsyncData<void>(null));
     });
 
     test('signOut failure', () async {
@@ -38,11 +46,22 @@ void main() {
           AccountScreenController(authRepository: authRepository);
       final exception = Exception('Connection Failed');
       when(authRepository.signOut).thenThrow(exception);
+      expectLater(
+        controller.stream,
+        emitsInOrder(
+          [
+            AsyncLoading<void>(),
+            predicate<AsyncValue<void>>((value) {
+              expect(value.hasError, true);
+              return true;
+            }),
+          ],
+        ),
+      );
       // run
       await controller.signOut();
       // verify
-      expect(controller.state.hasError, true);
-      expect(controller.state, isA<AsyncError>());
+      verify(authRepository.signOut).called(1);
     });
   });
 }
