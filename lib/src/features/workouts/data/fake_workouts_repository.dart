@@ -1,8 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lifted/src/constants/test_workouts.dart';
 import 'package:lifted/src/features/workouts/domain/workout.dart';
+import 'package:lifted/src/utils/delay.dart';
 
 class FakeWorkoutsRepository {
+  FakeWorkoutsRepository({this.addDelay = true});
+
+  final bool addDelay;
   final List<Workout> _workouts = kTestWorkouts;
 
   List<Workout> getWorkoutsList() {
@@ -14,12 +18,12 @@ class FakeWorkoutsRepository {
   }
 
   Future<List<Workout>> fetchWorkoutsList() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await delay(addDelay);
     return Future.value(_workouts);
   }
 
   Stream<List<Workout>> watchWorkoutsList() async* {
-    await Future.delayed(const Duration(seconds: 2));
+    await delay(addDelay);
     yield _workouts;
   }
 
