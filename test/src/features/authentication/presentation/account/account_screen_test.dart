@@ -1,5 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lifted/src/features/authentication/domain/app_user.dart';
+import 'package:mocktail/mocktail.dart';
 
+import '../../../../mocks.dart';
 import '../../auth_robot.dart';
 
 void main() {
@@ -19,5 +22,27 @@ void main() {
     r.expectLogoutDialogFound();
     await r.tapDialogLogoutButton();
     r.expectLogoutDialogNotFound();
+    r.expectErrorAlertNotFound();
+  });
+
+  testWidgets('Confirm logout, failer', (tester) async {
+    final r = AuthRobot(tester);
+    final authRepository = MockAuthRepository();
+    final exception = Exception('Connection Failed');
+    when(authRepository.authStateChanges).thenAnswer(
+      (_) => Stream.value(
+        AppUser(
+          uid: '123',
+          email: 'test@test.com',
+        ),
+      ),
+    );
+    when(authRepository.signOut).thenThrow(exception);
+    await r.pumpAccountScreen(authRepository: authRepository);
+    await r.tapLogoutButton();
+    r.expectLogoutDialogFound();
+    await r.tapDialogLogoutButton();
+    r.expectLogoutDialogNotFound();
+    r.expectErrorAlertFound();
   });
 }
