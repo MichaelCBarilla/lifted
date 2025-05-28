@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lifted/src/common_widgets/alert_dialogs.dart';
 import 'package:lifted/src/features/authentication/presentation/account/account_screen.dart';
 
 class AuthRobot {
@@ -39,5 +40,12 @@ class AuthRobot {
   void expectLogoutDialogNotFound() {
     final dialogText = find.text('Are you sure?');
     expect(dialogText, findsNothing);
+  }
+
+  Future<void> tapDialogLogoutButton() async {
+    final logoutButton = find.byKey(kDialogDefaultKey);
+    expect(logoutButton, findsOneWidget);
+    await tester.tap(logoutButton);
+    await tester.pump();
   }
 }
