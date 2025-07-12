@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lifted/src/app.dart';
 import 'package:lifted/src/localization/string_hardcoded.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  GoRouter.optionURLReflectsImperativeAPIs = true;
+
   // turn off the # in the URLs on the web
   usePathUrlStrategy();
   // * Register error handlers. For more info, see:

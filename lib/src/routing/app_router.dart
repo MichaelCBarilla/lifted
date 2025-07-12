@@ -57,17 +57,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               child: AccountScreen(),
             ),
           ),
-          GoRoute(
-            path: 'signIn',
-            name: AppRoute.signIn.name,
-            pageBuilder: (context, state) => const MaterialPage(
-              fullscreenDialog: true,
-              child: EmailPasswordSignInScreen(
-                formType: EmailPasswordSignInFormType.signIn,
-              ),
-            ),
-          ),
         ],
+      ),
+      GoRoute(
+        path: '/signIn',
+        name: AppRoute.signIn.name,
+        builder: (context, state) => const EmailPasswordSignInScreen(
+          formType: EmailPasswordSignInFormType.signIn,
+        ),
       ),
     ],
     errorBuilder: (context, state) => const NotFoundScreen(),

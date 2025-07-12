@@ -8,6 +8,7 @@ import 'package:lifted/src/features/authentication/data/fake_auth_repository.dar
 import 'package:lifted/src/features/authentication/presentation/account/account_screen.dart';
 import 'package:lifted/src/features/authentication/presentation/sign_in/email_password_sign_in_screen.dart';
 import 'package:lifted/src/features/authentication/presentation/sign_in/email_password_sign_in_state.dart';
+import 'package:lifted/src/features/workouts/presentation/home_app_bar/more_menu_button.dart';
 
 import '../../mocks.dart';
 
@@ -54,6 +55,13 @@ class AuthRobot {
   }
 
   //actions
+  Future<void> openAccountScreen() async {
+    final accountButton = find.byKey(MoreMenuButton.accountKey);
+    expect(accountButton, findsOneWidget);
+    await tester.tap(accountButton);
+    await tester.pumpAndSettle();
+  }
+
   Future<void> enterEmail(String email) async {
     final emailField = find.byKey(EmailPasswordSignInScreen.emailKey);
     expect(emailField, findsOneWidget);
@@ -68,11 +76,17 @@ class AuthRobot {
     await tester.pump();
   }
 
+  Future<void> signInWithEmailAndPassword() async {
+    await enterEmail('test@test.com');
+    await enterPassword('test1234');
+    await tapEmailAndPasswordSubmitButton();
+  }
+
   Future<void> tapEmailAndPasswordSubmitButton() async {
     final submitButton = find.byType(PrimaryButton);
     expect(submitButton, findsOneWidget);
     await tester.tap(submitButton);
-    await tester.pump();
+    await tester.pumpAndSettle();
   }
 
   Future<void> tapFormSwitchButton() async {
@@ -100,7 +114,7 @@ class AuthRobot {
     final logoutButton = find.byKey(kDialogDefaultKey);
     expect(logoutButton, findsOneWidget);
     await tester.tap(logoutButton);
-    await tester.pump();
+    await tester.pumpAndSettle();
   }
 
   //expectations
