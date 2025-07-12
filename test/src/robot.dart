@@ -9,12 +9,16 @@ import 'package:lifted/src/features/workouts/presentation/home_app_bar/more_menu
 import 'package:lifted/src/features/workouts/presentation/workouts_list/workout_card.dart';
 
 import 'features/authentication/auth_robot.dart';
+import 'goldens/golden_robot.dart';
 
 class Robot {
-  Robot(this.tester) : auth = AuthRobot(tester);
+  Robot(this.tester)
+      : auth = AuthRobot(tester),
+        golden = GoldenRobot(tester);
 
   final WidgetTester tester;
   final AuthRobot auth;
+  final GoldenRobot golden;
 
   // Pumpers
   Future<void> pumpMyApp() async {
