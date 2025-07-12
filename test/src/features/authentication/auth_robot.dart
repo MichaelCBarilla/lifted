@@ -110,11 +110,11 @@ class AuthRobot {
     await tester.pump();
   }
 
-  Future<void> tapDialogLogoutButton() async {
+  Future<void> tapDialogLogoutButton({shouldSettle = false}) async {
     final logoutButton = find.byKey(kDialogDefaultKey);
     expect(logoutButton, findsOneWidget);
     await tester.tap(logoutButton);
-    await tester.pumpAndSettle();
+    shouldSettle ? await tester.pumpAndSettle() : await tester.pump();
   }
 
   //expectations
